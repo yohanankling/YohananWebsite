@@ -1,79 +1,78 @@
 (function ($) {
 	"use strict";
 	var nav = $('nav');
-  var navHeight = nav.outerHeight();
-  
-  $('.navbar-toggler').on('click', function() {
-    if( ! $('#mainNav').hasClass('navbar-reduce')) {
-      $('#mainNav').addClass('navbar-reduce');
-    }
-  })
+	var navHeight = nav.outerHeight();
 
-  // Preloader
-  $(window).on('load', function () {
-    if ($('#preloader').length) {
-      $('#preloader').delay(100).fadeOut('slow', function () {
-        $(this).remove();
-      });
-    }
-  });
+	$('.navbar-toggler').on('click', function() {
+		if( ! $('#mainNav').hasClass('navbar-reduce')) {
+			$('#mainNav').addClass('navbar-reduce');
+		}
+	})
 
-  // Back to top button
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 100) {
-      $('.back-to-top').fadeIn('slow');
-    } else {
-      $('.back-to-top').fadeOut('slow');
-    }
-  });
-  $('.back-to-top').click(function(){
-    $('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
-    return false;
-  });
+	$(window).on('load', function () {
+		if ($('#preloader').length) {
+			$('#preloader').delay(100).fadeOut('slow', function () {
+				$(this).remove();
+			});
+		}
+	});
 
-	/*--/ Star ScrollTop /--*/
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > 100) {
+			$('.back-to-top').fadeIn('slow');
+		} else {
+			$('.back-to-top').fadeOut('slow');
+		}
+	});
+	$('.back-to-top').click(function(){
+		$('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
+		return false;
+	});
+
 	$('.scrolltop-mf').on("click", function () {
 		$('html, body').animate({
 			scrollTop: 0
 		}, 1000);
 	});
 
-	/*--/ Star Counter /--*/
 	$('.counter').counterUp({
 		delay: 15,
 		time: 2000
 	});
 
-	/*--/ Star Scrolling nav /--*/
 	$('a.js-scroll[href*="#"]:not([href="#"])').on("click", function () {
 		if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
 			var target = $(this.hash);
 			target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
 			if (target.length) {
+				var extraOffset = 0;
+				if (this.hash === '#projects') {
+					extraOffset = 65;
+				}
+				if (this.hash === '#about') {
+					extraOffset = 65;
+				}
+
 				$('html, body').animate({
-					scrollTop: (target.offset().top - navHeight + 5)
+					scrollTop: (target.offset().top - navHeight + 5 + extraOffset)
 				}, 1000, "easeInOutExpo");
 				return false;
 			}
 		}
 	});
 
-	// Closes responsive menu when a scroll trigger link is clicked
 	$('.js-scroll').on("click", function () {
 		$('.navbar-collapse').collapse('hide');
 	});
 
-	// Activate scrollspy to add active class to navbar items on scroll
 	$('body').scrollspy({
 		target: '#mainNav',
 		offset: navHeight
 	});
-	/*--/ End Scrolling nav /--*/
 
-	/*--/ Navbar Menu Reduce /--*/
 	$(window).trigger('scroll');
 	$(window).on('scroll', function () {
-		var pixels = 50; 
+		var pixels = 50;
 		var top = 1200;
 		if ($(window).scrollTop() > pixels) {
 			$('.navbar-expand-md').addClass('navbar-reduce');
@@ -89,9 +88,8 @@
 		}
 	});
 
-	/*--/ Star Typed /--*/
 	if ($('.text-slider').length == 1) {
-    var typed_strings = $('.text-slider-items').text();
+		var typed_strings = $('.text-slider-items').text();
 		var typed = new Typed('.text-slider', {
 			strings: typed_strings.split(','),
 			typeSpeed: 80,
@@ -101,7 +99,6 @@
 		});
 	}
 
-	/*--/ Testimonials owl /--*/
 	$('#testimonial-mf').owlCarousel({
 		margin: 20,
 		autoplay: true,
